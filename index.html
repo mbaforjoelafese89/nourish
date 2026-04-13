@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nourish — Fine Food & Beverages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf7f2;
+      --warm-white: #ffffff;
+      --stone: #e8e0d5;
+      --clay: #c4a882;
+      --bark: #7a5c3e;
+      --espresso: #2e1f0f;
+      --sage: #8a9e7a;
+      --blush: #e8d5c4;
+      --text: #2e2620;
+      --text-light: #7a6b5e;
+      --accent: #b87333;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--stone);
+      animation: fadeDown 0.6s ease both;
+    }
+
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:none; } }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.02em;
+      color: var(--espresso);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-light);
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-right { display: flex; align-items: center; gap: 1.2rem; }
+
+    .cart-btn {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: var(--espresso); color: #fff;
+      border: none; cursor: pointer;
+      padding: 0.6rem 1.2rem; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; font-weight: 500;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cart-btn:hover { background: var(--bark); transform: scale(1.03); }
+    .cart-count {
+      background: var(--accent); color: #fff;
+      border-radius: 50%; width: 18px; height: 18px;
+      font-size: 0.7rem; display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+    }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+      padding: 8rem 4rem 4rem;
+      gap: 4rem;
+    }
+
+    .hero-text { animation: fadeUp 0.8s 0.2s ease both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+    .hero-eyebrow::before { content:''; width:28px; height:1px; background: var(--accent); }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 1.1; color: var(--espresso);
+      margin-bottom: 1.4rem;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1.05rem; font-weight: 300; color: var(--text-light);
+      line-height: 1.7; max-width: 420px; margin-bottom: 2.2rem;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--espresso); color: #fff;
+      padding: 0.85rem 2rem; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 500;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--bark); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent; color: var(--espresso);
+      padding: 0.85rem 2rem; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 500;
+      border: 2px solid var(--stone); cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--clay); transform: translateY(-2px); }
+
+    .hero-visual {
+      position: relative; animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .hero-card {
+      background: var(--warm-white);
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 24px 60px rgba(46,31,15,0.1);
+      position: relative; overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, var(--blush) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--sage); color: #fff;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 100px;
+      margin-bottom: 1.2rem;
+    }
+
+    .featured-img {
+      width: 100%; height: 260px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--blush) 0%, var(--stone) 100%);
+      margin-bottom: 1.4rem; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+    }
+
+    .featured-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--espresso); margin-bottom: 0.3rem;
+    }
+    .featured-price { font-size: 1.1rem; font-weight: 500; color: var(--accent); }
+
+    .hero-stats {
+      display: flex; gap: 2rem; margin-top: 2rem;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 600; color: var(--espresso); display: block;
+    }
+    .stat-label { font-size: 0.78rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 6rem 4rem; }
+
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--espresso);
+      line-height: 1.2;
+    }
+    .section-title em { font-style: italic; color: var(--clay); }
+
+    /* ── CATEGORIES ── */
+    .categories { background: var(--warm-white); }
+
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
+    }
+
+    .cat-card {
+      background: var(--cream); border-radius: 20px;
+      padding: 2rem 1.5rem; text-align: center;
+      cursor: pointer; transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid var(--stone);
+    }
+    .cat-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(46,31,15,0.1); }
+
+    .cat-icon { font-size: 2.8rem; margin-bottom: 0.8rem; display: block; }
+    .cat-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--espresso); margin-bottom: 0.3rem; }
+    .cat-count { font-size: 0.8rem; color: var(--text-light); }
+
+    /* ── PRODUCTS ── */
+    #products { background: var(--cream); }
+
+    .filter-bar {
+      display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.2rem; border-radius: 100px;
+      border: 1.5px solid var(--stone); background: transparent;
+      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--text-light);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--espresso); border-color: var(--espresso); color: #fff;
+    }
+
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.6rem;
+    }
+
+    .product-card {
+      background: var(--warm-white); border-radius: 20px;
+      overflow: hidden; cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid var(--stone);
+      animation: fadeUp 0.5s ease both;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(46,31,15,0.12); }
+
+    .product-img {
+      height: 200px; background: linear-gradient(135deg, var(--blush), var(--stone));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4.5rem; position: relative; overflow: hidden;
+    }
+
+    .product-tag {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--sage); color: #fff;
+      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 100px;
+    }
+    .product-tag.hot { background: var(--accent); }
+
+    .product-info { padding: 1.2rem 1.4rem 1.4rem; }
+    .product-category { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--espresso); margin-bottom: 0.5rem; }
+    .product-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.5; margin-bottom: 1rem; }
+
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-size: 1.1rem; font-weight: 600; color: var(--espresso); }
+    .product-price .currency { font-size: 0.75rem; font-weight: 400; color: var(--text-light); vertical-align: top; margin-top: 3px; display: inline-block; }
+
+    .add-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--espresso); color: #fff; border: none;
+      font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .add-btn:hover { background: var(--accent); transform: scale(1.1); }
+
+    /* ── BANNER ── */
+    .promo-banner {
+      background: var(--espresso); color: #fff;
+      padding: 5rem 4rem; text-align: center;
+    }
+    .promo-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 0.8rem;
+    }
+    .promo-banner h2 em { font-style: italic; color: var(--clay); }
+    .promo-banner p { color: rgba(255,255,255,0.65); margin-bottom: 2rem; font-size: 1rem; }
+
+    /* ── CART DRAWER ── */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+      z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    .cart-drawer {
+      position: fixed; top: 0; right: -420px; width: 420px; height: 100vh;
+      background: var(--warm-white); z-index: 300; padding: 2rem;
+      display: flex; flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: -20px 0 60px rgba(0,0,0,0.12);
+    }
+    .cart-drawer.open { right: 0; }
+
+    .cart-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.8rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--stone);
+    }
+    .cart-header h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--espresso); }
+    .close-btn {
+      background: var(--cream); border: none; cursor: pointer;
+      width: 36px; height: 36px; border-radius: 50%;
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .close-btn:hover { background: var(--stone); }
+
+    .cart-items { flex: 1; overflow-y: auto; }
+
+    .cart-item {
+      display: flex; gap: 1rem; align-items: center;
+      padding: 1rem 0; border-bottom: 1px solid var(--stone);
+    }
+    .cart-item-img {
+      width: 60px; height: 60px; border-radius: 12px;
+      background: var(--blush); display: flex; align-items: center;
+      justify-content: center; font-size: 1.8rem; flex-shrink: 0;
+    }
+    .cart-item-details { flex: 1; }
+    .cart-item-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--espresso); }
+    .cart-item-price { font-size: 0.85rem; color: var(--accent); font-weight: 500; }
+
+    .qty-ctrl {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .qty-btn {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--stone); border: none; cursor: pointer;
+      font-size: 1rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .qty-btn:hover { background: var(--clay); color: #fff; }
+    .qty-num { font-size: 0.9rem; font-weight: 500; min-width: 20px; text-align: center; }
+
+    .cart-footer {
+      padding-top: 1.4rem; border-top: 1px solid var(--stone);
+    }
+    .cart-total {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .cart-total span:first-child { font-size: 0.9rem; color: var(--text-light); }
+    .cart-total span:last-child { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--espresso); }
+
+    .checkout-btn {
+      width: 100%; padding: 1rem; border-radius: 12px;
+      background: var(--espresso); color: #fff; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .checkout-btn:hover { background: var(--bark); }
+
+    .empty-cart { text-align: center; padding: 3rem 0; color: var(--text-light); }
+    .empty-cart span { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--espresso); color: rgba(255,255,255,0.5);
+      padding: 3rem 4rem; text-align: center;
+      font-size: 0.85rem;
+    }
+    footer .footer-logo {
+      font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    footer .footer-logo span { color: var(--clay); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--espresso); color: #fff;
+      padding: 0.75rem 1.5rem; border-radius: 100px;
+      font-size: 0.88rem; font-weight: 500;
+      z-index: 400; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      #home { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; }
+      .hero-visual { display: none; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      section { padding: 4rem 2rem; }
+      .cart-drawer { width: 100%; right: -100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="logo">Nouri<span>sh</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#products">Products</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Curated for you</div>
+    <h1 class="hero-title">
+      Fine Foods &<br><em>Artisan</em> Drinks
+    </h1>
+    <p class="hero-desc">
+      Discover handpicked gourmet foods and premium beverages — sourced from local farms and artisan producers around the world.
+    </p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Shop Now</a>
+      <a href="#categories" class="btn-outline">Browse Categories</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <span class="hero-badge">⭐ Staff Pick</span>
+      <div class="featured-img">🫖</div>
+      <div class="featured-name">Himalayan Herbal Tea</div>
+      <div class="featured-price">$18.99</div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">120+</span><span class="stat-label">Products</span></div>
+        <div class="stat"><span class="stat-num">4.9★</span><span class="stat-label">Avg Rating</span></div>
+        <div class="stat"><span class="stat-num">Free</span><span class="stat-label">Delivery</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="section-header">
+    <div class="section-eyebrow">What we offer</div>
+    <h2 class="section-title">Shop by <em>Category</em></h2>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card" onclick="filterProducts('tea')">
+      <span class="cat-icon">🍵</span>
+      <div class="cat-name">Teas & Infusions</div>
+      <div class="cat-count">24 products</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('coffee')">
+      <span class="cat-icon">☕</span>
+      <div class="cat-name">Specialty Coffee</div>
+      <div class="cat-count">18 products</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('snacks')">
+      <span class="cat-icon">🫙</span>
+      <div class="cat-name">Gourmet Snacks</div>
+      <div class="cat-count">32 products</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('juice')">
+      <span class="cat-icon">🧃</span>
+      <div class="cat-name">Cold Pressed Juices</div>
+      <div class="cat-count">15 products</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-header">
+    <div class="section-eyebrow">Our selection</div>
+    <h2 class="section-title">Fresh <em>Arrivals</em></h2>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+    <button class="filter-btn" onclick="filterProducts('tea', this)">Tea</button>
+    <button class="filter-btn" onclick="filterProducts('coffee', this)">Coffee</button>
+    <button class="filter-btn" onclick="filterProducts('snacks', this)">Snacks</button>
+    <button class="filter-btn" onclick="filterProducts('juice', this)">Juices</button>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <h2>Free Delivery on Orders <em>Over $40</em></h2>
+  <p>Use code NOURISH10 for 10% off your first order</p>
+  <a href="#products" class="btn-primary" style="background:var(--clay);">Shop Now</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Nouri<span>sh</span></div>
+  <p>© 2025 Nourish Food & Beverages. All rights reserved.</p>
+  <p style="margin-top:0.4rem;">Made with ♥ as an end-of-year web design project.</p>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const products = [
+    { id:1, name:"Himalayan Herbal Tea", category:"tea", price:18.99, emoji:"🫖", desc:"Sourced from high-altitude gardens, rich in antioxidants.", tag:"Bestseller" },
+    { id:2, name:"Single-Origin Espresso", category:"coffee", price:22.50, emoji:"☕", desc:"Dark roast from Ethiopian highlands, bold and velvety.", tag:"hot" },
+    { id:3, name:"Cold Brew Concentrate", category:"coffee", price:16.75, emoji:"🧊", desc:"Smooth 24-hour cold brew, ready to dilute and enjoy.", tag:"" },
+    { id:4, name:"Green Matcha Blend", category:"tea", price:24.99, emoji:"🍃", desc:"Ceremonial-grade Japanese matcha, earthy and smooth.", tag:"hot" },
+    { id:5, name:"Tropical Fruit Juice", category:"juice", price:9.99, emoji:"🥭", desc:"Cold-pressed mango and passionfruit, no added sugar.", tag:"" },
+    { id:6, name:"Beet & Ginger Juice", category:"juice", price:11.50, emoji:"🫚", desc:"Energising blend of raw beet, ginger and lemon.", tag:"New" },
+    { id:7, name:"Almond & Honey Mix", category:"snacks", price:13.99, emoji:"🫙", desc:"Slow-roasted almonds glazed with wildflower honey.", tag:"" },
+    { id:8, name:"Dark Chocolate Bark", category:"snacks", price:15.00, emoji:"🍫", desc:"70% cocoa bark with sea salt and dried cranberries.", tag:"Bestseller" },
+    { id:9, name:"Chamomile Dreams Tea", category:"tea", price:14.99, emoji:"🌼", desc:"Calming chamomile with hints of vanilla and lavender.", tag:"New" },
+    { id:10, name:"Oat Milk Latte Kit", category:"coffee", price:28.00, emoji:"🥛", desc:"Everything you need for the perfect homemade latte.", tag:"" },
+    { id:11, name:"Berry Granola Bites", category:"snacks", price:10.50, emoji:"🫐", desc:"Crunchy oat clusters with blueberry and raspberry.", tag:"" },
+    { id:12, name:"Watermelon Cooler", category:"juice", price:8.99, emoji:"🍉", desc:"Refreshing cold-pressed watermelon with mint.", tag:"New" },
+  ];
+
+  let cart = [];
+  let currentFilter = 'all';
+
+  function renderProducts(filter = 'all') {
+    const grid = document.getElementById('productsGrid');
+    const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+    grid.innerHTML = filtered.map((p, i) => `
+      <div class="product-card" style="animation-delay:${i * 0.06}s">
+        <div class="product-img">
+          ${p.tag ? `<span class="product-tag ${p.tag === 'hot' ? 'hot' : ''}">${p.tag === 'hot' ? '🔥 Hot' : p.tag}</span>` : ''}
+          ${p.emoji}
+        </div>
+        <div class="product-info">
+          <div class="product-category">${p.category}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-footer">
+            <div class="product-price"><span class="currency">$</span>${p.price.toFixed(2)}</div>
+            <button class="add-btn" onclick="addToCart(${p.id})" title="Add to cart">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterProducts(cat, btn) {
+    currentFilter = cat;
+    renderProducts(cat);
+    if (btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  }
+
+  function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    const existing = cart.find(c => c.id === id);
+    if (existing) existing.qty++;
+    else cart.push({ ...product, qty: 1 });
+    updateCartUI();
+    showToast(`${product.emoji} ${product.name} added to cart`);
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(c => c.id !== id);
+    updateCartUI();
+  }
+
+  function changeQty(id, delta) {
+    const item = cart.find(c => c.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) removeFromCart(id);
+    else updateCartUI();
+  }
+
+  function updateCartUI() {
+    const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    document.getElementById('cartCount').textContent = cart.reduce((s, c) => s + c.qty, 0);
+    const itemsEl = document.getElementById('cartItems');
+    const footerEl = document.getElementById('cartFooter');
+
+    if (cart.length === 0) {
+      itemsEl.innerHTML = `<div class="empty-cart"><span>🛒</span>Your cart is empty</div>`;
+      footerEl.style.display = 'none';
+    } else {
+      footerEl.style.display = 'block';
+      document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+      itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-img">${item.emoji}</div>
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+          </div>
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function toggleCart() {
+    document.getElementById('cartDrawer').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+  }
+
+  function checkout() {
+    showToast('🎉 Order placed! Thank you for shopping with Nourish.');
+    cart = [];
+    updateCartUI();
+    toggleCart();
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // Init
+  renderProducts();
+  updateCartUI();
+</script>
+</body>
+</html>
